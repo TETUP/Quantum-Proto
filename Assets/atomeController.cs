@@ -7,6 +7,7 @@ public class atomeController : MonoBehaviour {
 	public bool touchable = false;
 
 	GameObject _orbit = null;
+	gravityField _orbctrl = null;
 	GameObject _electron = null;
 	electronControler _elctrl = null;
 	Light _lgt = null;
@@ -22,6 +23,7 @@ public class atomeController : MonoBehaviour {
 				_orbit = transform.GetChild (i).gameObject;
 			else if (transform.GetChild (i).gameObject.name == "electron") {
 				_electron = transform.GetChild (i).gameObject;
+				_orbctrl = _orbit.GetComponent<gravityField> ();
 				_elctrl = _electron.GetComponent<electronControler> ();
 			}
 			i++;
@@ -47,20 +49,24 @@ public class atomeController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider c){
-		if (c.gameObject.name == "electron" && _electron != null) {
-			if (_elctrl._couche < _coucheMax) {
-				_elctrl.LoadElec (_coucheMax);
-				if (_elctrl._couche == _coucheMax) {
-					touchable = true;
-					Activate ();
+		if (c.gameObject.name == "electron") {
+			if (_electron != null) {
+				if (_elctrl._couche < _coucheMax) {
+					_elctrl.LoadElec (_coucheMax);
+					if (_elctrl._couche == _coucheMax) {
+						touchable = true;
+						Activate ();
+					}
 				}
 			}
+			Destroy (c.gameObject);
 		}
 			
 	}
 
 	void Activate(){
 		touchable = true;
+		_orbctrl.DesactivateField ();
 		_lgt.color = Color.yellow;
 		_rnder.material = _rnder.materials [1];
 		_elctrl.ActivateColor();
