@@ -1,8 +1,10 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\electronControler.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\atomeController.cs">
     <Files>
+      <File FileName="Assets\atomeController.cs" Line="62" Column="27" />
       <File FileName="Assets\electronControler.cs" Line="24" Column="3" />
+      <File FileName="Assets\gravityField.cs" Line="35" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
