@@ -10,7 +10,7 @@ public class electronControler : MonoBehaviour {
 	public float rotateSpeed = 1.0f;
 	private bool leashed = true;
 	private Light _lgt = null;
-
+	private float delay = 0.0f;
 	void Awake(){
 		_lgt = GetComponent<Light> ();
 	}
@@ -25,8 +25,12 @@ public class electronControler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (leashed)
-			transform.RotateAround(_atome.transform.position, new Vector3(0, 0, 1), -rotateSpeed * Time.deltaTime);
+		if (leashed) {
+			transform.RotateAround (_atome.transform.position, new Vector3 (0, 0, 1), -rotateSpeed * Time.deltaTime);
+
+		}
+		if (!leashed && delay + 5.0f <= Time.time)
+			Destroy (this.gameObject);
 	}
 
 	void ChangeOrbit(float rayon){
@@ -37,6 +41,7 @@ public class electronControler : MonoBehaviour {
 	public void Unleash (){
 		leashed = false;
 		_rb.AddRelativeForce (rotateSpeed, 0.0f, 0.0f);
+		delay = Time.time;
 	}
 
 	public void LoadElec (int coucheMax){
@@ -48,5 +53,9 @@ public class electronControler : MonoBehaviour {
 	public void ActivateColor (){
 		Debug.Log (_lgt.name);
 		_lgt.color = Color.yellow;
+	}
+
+	public void RefillColor(){
+		_lgt.color = Color.green;
 	}
 }
