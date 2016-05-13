@@ -11,10 +11,11 @@ public class gravityField : MonoBehaviour {
 	void Start () {
 		_sphCldr = GetComponent<SphereCollider> ();
 		for (int i = 0; i < transform.childCount; i++) {
-			if (transform.GetChild (i).gameObject.activeSelf)
+			if (transform.GetChild(i).gameObject.activeSelf)
 				_orbitMax++;
+			Debug.Log (i);
 		}
-		Debug.Log (_orbitMax);
+		Debug.Log ("OrbitMax = " + _orbitMax);
 		switch(_orbitMax){
 		case 1:
 			_sphCldr.radius = 1.0f;

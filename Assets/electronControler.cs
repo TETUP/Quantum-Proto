@@ -58,4 +58,8 @@ public class electronControler : MonoBehaviour {
 	public void RefillColor(){
 		_lgt.color = Color.green;
 	}
+
+	void OnTriggerStay (Collider c){
+		delay = Time.time;
+	}
 }

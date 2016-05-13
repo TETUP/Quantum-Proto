@@ -22,22 +22,22 @@ public class atomeController : MonoBehaviour {
 		int i = 0;
 		_orbit = transform.GetChild (0).gameObject;
 		while (i < transform.childCount) {
-			if (transform.GetChild (i).gameObject.name == "Orbit")
+			if (transform.GetChild (i).gameObject.name == "Orbit") {
 				_orbit = transform.GetChild (i).gameObject;
+				_orbctrl = _orbit.GetComponent<gravityField> ();
+			}
 			i++;
 		}
 		CreateElectron ();
-	}
-	void Start () {
 		//Active orbits
-		int i = 0;
+		i = 0;
 		for (i = 0; i < _coucheMax; i++)
 			_orbit.transform.GetChild (i).gameObject.SetActive (true);
-
+		
+	}
+	void Start () {
 		_lgt = GetComponent<Light> ();
 		_rnder = GetComponent<Renderer> ();
-
-
 
 		if (touchable)
 			Activate ();
@@ -74,7 +74,6 @@ public class atomeController : MonoBehaviour {
 		while (i < transform.childCount) {
 			if (transform.GetChild (i).gameObject.name == "electron") {
 				_electron = transform.GetChild (i).gameObject;
-				_orbctrl = _orbit.GetComponent<gravityField> ();
 				_elctrl = _electron.GetComponent<electronControler> ();
 			}
 			i++;
