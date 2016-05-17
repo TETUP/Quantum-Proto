@@ -11,8 +11,11 @@ public class electronControler : MonoBehaviour {
 	private bool leashed = true;
 	private Light _lgt = null;
 	private float delay = 0.0f;
-	void Awake(){
+	public TrailRenderer _tRender = null;
+
+    void Awake(){
 		_lgt = GetComponent<Light> ();
+		_tRender = GetComponent<TrailRenderer> ();
 	}
 
 	// Use this for initialization
@@ -21,6 +24,7 @@ public class electronControler : MonoBehaviour {
 		_rb = GetComponent<Rigidbody> ();
 		//init e-
 		transform.localPosition = new Vector3(0.0f, position, 0.0f);
+
 	}
 	
 	// Update is called once per frame
@@ -40,7 +44,7 @@ public class electronControler : MonoBehaviour {
 
 	public void Unleash (){
 		leashed = false;
-		_rb.AddRelativeForce (rotateSpeed, 0.0f, 0.0f);
+		_rb.AddRelativeForce (position*rotateSpeed, 0.0f, 0.0f);
 		delay = Time.time;
 	}
 
@@ -53,13 +57,16 @@ public class electronControler : MonoBehaviour {
 	public void ActivateColor (){
 		Debug.Log (_lgt.name);
 		_lgt.color = Color.yellow;
+		_tRender.material.SetColor("_TintColor", Color.yellow);
 	}
 
 	public void RefillColor(){
 		_lgt.color = Color.green;
+		_tRender.material.SetColor("_TintColor", Color.green);
+		Debug.Log("green trail");
 	}
 
 	void OnTriggerStay (Collider c){
 		delay = Time.time;
 	}
-}
+    }
