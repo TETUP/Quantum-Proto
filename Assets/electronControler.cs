@@ -11,6 +11,7 @@ public class electronControler : MonoBehaviour {
 	private bool leashed = true;
 	private Light _lgt = null;
 	private float delay = 0.0f;
+	private Collider _c = null;
 	public TrailRenderer _tRender = null;
 
     void Awake(){
@@ -24,17 +25,25 @@ public class electronControler : MonoBehaviour {
 		_rb = GetComponent<Rigidbody> ();
 		//init e-
 		transform.localPosition = new Vector3(0.0f, position, 0.0f);
-
+		_c = GetComponent<Collider> ();
+		GameObject[] allElec = GameObject.FindGameObjectsWithTag ("electron");
+		foreach (GameObject elecCurrent in allElec) {
+			if (elecCurrent.GetComponent<Collider>() != null)
+				Physics.IgnoreCollision (elecCurrent.GetComponent<Collider>(), _c);
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (leashed) {
 			transform.RotateAround (_atome.transform.position, new Vector3 (0, 0, 1), -rotateSpeed * Time.deltaTime);
-
+		} else {
+			transform.LookAt (transform.position + _rb.velocity);
 		}
-		if (!leashed && delay + 5.0f <= Time.time)
+
+		if (!leashed && delay + 5.0f <= Time.time) {
 			Destroy (this.gameObject);
+		}
 	}
 
 	void ChangeOrbit(float rayon){
@@ -63,10 +72,13 @@ public class electronControler : MonoBehaviour {
 	public void RefillColor(){
 		_lgt.color = Color.green;
 		_tRender.material.SetColor("_TintColor", Color.green);
-		Debug.Log("green trail");
 	}
 
-	void OnTriggerStay (Collider c){
+	void OnCollisionEnter (Collision c){
 		delay = Time.time;
+	}
+
+	void OnDestroy(){
+		Instantiate (Resources.Load("ParticleEnd"), transform.position, transform.rotation);
 	}
     }

@@ -13,9 +13,7 @@ public class gravityField : MonoBehaviour {
 		for (int i = 0; i < transform.childCount; i++) {
 			if (transform.GetChild(i).gameObject.activeSelf)
 				_orbitMax++;
-			Debug.Log (i);
 		}
-		Debug.Log ("OrbitMax = " + _orbitMax);
 		switch(_orbitMax){
 		case 1:
 			_sphCldr.radius = 1.0f;
