@@ -15,6 +15,7 @@ public class atomeController : MonoBehaviour {
 	Light _lgt = null;
 	Renderer _rnder = null;
 	float delay = 0.0f;
+	public bool clockwise = true;
 	// Use this for initialization
 
 	void Awake () {
@@ -75,6 +76,11 @@ public class atomeController : MonoBehaviour {
 			if (transform.GetChild (i).gameObject.name == "electron") {
 				_electron = transform.GetChild (i).gameObject;
 				_elctrl = _electron.GetComponent<electronControler> ();
+				_elctrl.SetClockwise (clockwise);
+				if (refill) {
+					_elctrl._couche = _coucheMax;
+					_elctrl.position = 0.5f * _coucheMax + 0.5f;
+				}
 			}
 			i++;
 		}

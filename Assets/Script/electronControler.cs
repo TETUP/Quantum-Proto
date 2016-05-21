@@ -5,13 +5,14 @@ public class electronControler : MonoBehaviour {
 
 	GameObject _atome = null;
 	Rigidbody _rb = null;
-	public float _couche = 1;
-	public float position = 1.0f;
+	public float _couche = 1.0f; //numéro de la couche sur laquelle l'électron orbite
+	public float position = 1.0f; //Position en terme spatial
 	public float rotateSpeed = 1.0f;
-	private bool leashed = true;
+	public bool leashed = true;
 	private Light _lgt = null;
-	private float delay = 0.0f;
+	public float delay = 0.0f;
 	private Collider _c = null;
+	private bool clockwise = true;
 	public TrailRenderer _tRender = null;
 
     void Awake(){
@@ -36,7 +37,10 @@ public class electronControler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (leashed) {
-			transform.RotateAround (_atome.transform.position, new Vector3 (0, 0, 1), -rotateSpeed * Time.deltaTime);
+			if (clockwise)
+				transform.RotateAround (_atome.transform.position, new Vector3 (0, 0, 1), -rotateSpeed * Time.deltaTime);
+			else
+				transform.RotateAround (_atome.transform.position, new Vector3 (0, 0, 1), rotateSpeed * Time.deltaTime);
 		} else {
 			transform.LookAt (transform.position + _rb.velocity);
 		}
@@ -53,7 +57,10 @@ public class electronControler : MonoBehaviour {
 
 	public void Unleash (){
 		leashed = false;
-		_rb.AddRelativeForce (position*rotateSpeed, 0.0f, 0.0f);
+		if (clockwise)
+			_rb.AddRelativeForce (position*rotateSpeed, 0.0f, 0.0f);
+		else
+			_rb.AddRelativeForce (-position*rotateSpeed, 0.0f, 0.0f);
 		delay = Time.time;
 	}
 
@@ -64,7 +71,6 @@ public class electronControler : MonoBehaviour {
 	}
 
 	public void ActivateColor (){
-		Debug.Log (_lgt.name);
 		_lgt.color = Color.yellow;
 		_tRender.material.SetColor("_TintColor", Color.yellow);
 	}
@@ -75,10 +81,18 @@ public class electronControler : MonoBehaviour {
 	}
 
 	void OnCollisionEnter (Collision c){
-		delay = Time.time;
+		temporise ();
 	}
 
 	void OnDestroy(){
 		Instantiate (Resources.Load("ParticleEnd"), transform.position, transform.rotation);
+	}
+
+	public void SetClockwise(bool b){
+		clockwise = b;
+	}
+
+	public void temporise(){
+		delay = Time.time;
 	}
     }

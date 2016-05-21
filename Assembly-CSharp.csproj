@@ -45,9 +45,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\atomeController.cs" />
-     <Compile Include="Assets\electronControler.cs" />
-     <Compile Include="Assets\gravityField.cs" />
+     <Compile Include="Assets\Script\atomeController.cs" />
+     <Compile Include="Assets\Script\blackholeControler.cs" />
+     <Compile Include="Assets\Script\electronControler.cs" />
+     <Compile Include="Assets\Script\gravityField.cs" />
+     <Compile Include="Assets\Script\lazerController.cs" />
+     <Compile Include="Assets\Script\particuleEnd.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
