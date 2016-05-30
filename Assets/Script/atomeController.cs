@@ -56,13 +56,9 @@ public class atomeController : MonoBehaviour {
 			bool explosion = false;
 			if (c.GetComponent<Rigidbody> ().velocity.magnitude > 15.0f && c.GetComponent<Rigidbody> ().velocity.magnitude < 50.0f) {
 				successBehavior.fissionSuccess ();
-				soundController.play (4);
-				soundController.mute (0);
 				explosion = true;
 			} else if (c.GetComponent<Rigidbody> ().velocity.magnitude > 50.0f) {
 				successBehavior.fusionSuccess ();
-				soundController.play (5);
-				soundController.mute (0);
 				explosion = true;
 			}
 			if (_electron != null) {

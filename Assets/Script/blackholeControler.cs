@@ -39,8 +39,8 @@ public class blackholeControler : MonoBehaviour {
 	void OnTriggerExit (Collider c){
 		if ((spawn - exit) < 1.0f) {
 			successBehavior.accelerateurSuccess ();
-			soundController.play (6);
-			soundController.pitchUp (6, 0.5f);
+			/*soundController.play (6);
+			soundController.pitchUp (6, 0.5f);*/
 		}
 		exit = Time.time;
 	}

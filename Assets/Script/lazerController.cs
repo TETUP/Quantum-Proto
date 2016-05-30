@@ -10,7 +10,6 @@ public class lazerController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider c){
 		if (c.tag == "electron" && !c.GetComponent<electronControler>().leashed) {
-			soundController.play (1);
 			successBehavior.dualitySuccess ();
 			float mag = c.GetComponent<Rigidbody> ().velocity.x;
 			Vector3 projection = Vector3.Dot (c.transform.position - transform.position, transform.up) * transform.up;

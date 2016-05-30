@@ -89,7 +89,7 @@ public class electronControler : MonoBehaviour {
 	void OnCollisionEnter (Collision c){
 		if (c.gameObject.tag == "wall") {
 			soundController.play (3);
-			soundController.loop (3);
+			soundController.recordTom ();
 		}
 		temporise ();
 	}

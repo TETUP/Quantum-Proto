@@ -8,9 +8,12 @@ public class gravityField : MonoBehaviour {
 	int _orbitMax = 0;
 	private float delay = 0.0f;
 
+	void Awake () {
+		_sphCldr = GetComponent<SphereCollider> ();
+	}
+
 	// Use this for initialization
 	void Start () {
-		_sphCldr = GetComponent<SphereCollider> ();
 		for (int i = 0; i < transform.childCount; i++) {
 			if (transform.GetChild(i).gameObject.activeSelf)
 				_orbitMax++;

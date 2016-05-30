@@ -30,6 +30,7 @@ public class successBehavior : MonoBehaviour {
 			Debug.Log ("Dualité Onde-Particule");
 			success [1] = true;
 		}
+		soundController.play (1);
 	}
 
 	//rencontre d'une particule avec un noyau à une grande vitesse
@@ -38,6 +39,8 @@ public class successBehavior : MonoBehaviour {
 			Debug.Log("Fission Nucléaire");
 			success [2] = true;
 		}
+		soundController.play (4);
+		soundController.mute (0);
 	}
 
 	//rencontre d'une particule avec un noyau à une très grande vitesse
@@ -46,6 +49,8 @@ public class successBehavior : MonoBehaviour {
 			Debug.Log ("Fusion Nucléaire");
 			success [3] = true;
 		}
+		soundController.play (5);
+		soundController.mute (0);
 	}
 
 	//accélerer une particule à l'aide de deux trou noir
@@ -54,6 +59,7 @@ public class successBehavior : MonoBehaviour {
 			Debug.Log("Accelerateur de Particule");
 			success [4] = true;
 		}
+		soundController.play (6);
 	}
 
 	//faire orbité une particule autour d'un noyau
