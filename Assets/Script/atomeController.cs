@@ -46,16 +46,32 @@ public class atomeController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (refill && _electron == null && delay + 5.0f <= Time.time) {
+		if (refill && _electron == null && delay + 3.0f <= Time.time) {
 			CreateElectron ();
 		}
 	}
 
 	void OnTriggerEnter (Collider c){
 		if (c.gameObject.name == "electron") {
+			bool explosion = false;
+			if (c.GetComponent<Rigidbody> ().velocity.magnitude > 15.0f && c.GetComponent<Rigidbody> ().velocity.magnitude < 50.0f) {
+				successBehavior.fissionSuccess ();
+				soundController.play (4);
+				soundController.mute (0);
+				explosion = true;
+			} else if (c.GetComponent<Rigidbody> ().velocity.magnitude > 50.0f) {
+				successBehavior.fusionSuccess ();
+				soundController.play (5);
+				soundController.mute (0);
+				explosion = true;
+			}
 			if (_electron != null) {
 				if (_elctrl._couche < _coucheMax) {
 					_elctrl.LoadElec (_coucheMax);
+					if (!explosion) {
+						soundController.reset (0);
+					}
+					soundController.pitchUp (0, 0.3f);
 					if (_elctrl._couche == _coucheMax) {
 						touchable = true;
 						Activate ();

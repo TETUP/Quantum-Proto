@@ -6,6 +6,7 @@ public class gravityField : MonoBehaviour {
 	public float intensity = 10.0f;
 	SphereCollider _sphCldr = null;
 	int _orbitMax = 0;
+	private float delay = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -33,9 +34,15 @@ public class gravityField : MonoBehaviour {
 	public void DesactivateField(){
 		_sphCldr.enabled = false;
 	}
-	
+
+	void OnTriggerEnter (Collider other){
+		delay = Time.time;
+	}
+
 	void OnTriggerStay (Collider other){
 		if (other.transform.parent == null)
 			other.attachedRigidbody.AddForce (intensity * (transform.position - other.transform.position));
+		if (!other.GetComponent<electronControler>().leashed && delay + 1.0f < Time.time)
+			successBehavior.valenceSuccess ();
 	}
 }

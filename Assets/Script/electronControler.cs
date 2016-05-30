@@ -32,6 +32,8 @@ public class electronControler : MonoBehaviour {
 			if (elecCurrent.GetComponent<Collider>() != null)
 				Physics.IgnoreCollision (elecCurrent.GetComponent<Collider>(), _c);
 		}
+		soundController.play (0);
+		soundController.loop (0);
 	}
 	
 	// Update is called once per frame
@@ -44,7 +46,6 @@ public class electronControler : MonoBehaviour {
 		} else {
 			transform.LookAt (transform.position + _rb.velocity);
 		}
-
 		if (!leashed && delay + 5.0f <= Time.time) {
 			Destroy (this.gameObject);
 		}
@@ -57,17 +58,22 @@ public class electronControler : MonoBehaviour {
 
 	public void Unleash (){
 		leashed = false;
+		//soundController.play (2);
 		if (clockwise)
 			_rb.AddRelativeForce (position*rotateSpeed, 0.0f, 0.0f);
 		else
 			_rb.AddRelativeForce (-position*rotateSpeed, 0.0f, 0.0f);
 		delay = Time.time;
+		if (isAllUnleash ()) {
+			soundController.unloop (0);
+		}
 	}
 
 	public void LoadElec (int coucheMax){
 		position += 0.5f;
 		_couche++;
 		ChangeOrbit (position);
+		successBehavior.quantumSuccess ();
 	}
 
 	public void ActivateColor (){
@@ -81,11 +87,16 @@ public class electronControler : MonoBehaviour {
 	}
 
 	void OnCollisionEnter (Collision c){
+		if (c.gameObject.tag == "wall") {
+			soundController.play (3);
+			soundController.loop (3);
+		}
 		temporise ();
 	}
 
 	void OnDestroy(){
 		Instantiate (Resources.Load("ParticleEnd"), transform.position, transform.rotation);
+		soundController.mute (6);
 	}
 
 	public void SetClockwise(bool b){
@@ -94,5 +105,14 @@ public class electronControler : MonoBehaviour {
 
 	public void temporise(){
 		delay = Time.time;
+	}
+
+	public bool isAllUnleash(){
+		GameObject[] find = GameObject.FindGameObjectsWithTag ("electron");
+		foreach (GameObject _ec in find){
+			if (!_ec.GetComponent<electronControler>().leashed)
+				return false;
+		}
+		return true;
 	}
     }

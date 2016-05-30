@@ -8,6 +8,7 @@ public class blackholeControler : MonoBehaviour {
 	private GameObject field = null;
 	private float delay = 0.5f;
 	private float spawn = 0.0f;
+	private float exit = 0.0f;
 	// Use this for initialization
 	void Start () {
 		if (_dest != null) {
@@ -32,5 +33,15 @@ public class blackholeControler : MonoBehaviour {
 		_dest.GetComponent<Collider> ().enabled = false;
 		spawn = Time.time;
 		c.transform.position = _dest.transform.position;
+		soundController.play (7);
+	}
+
+	void OnTriggerExit (Collider c){
+		if ((spawn - exit) < 1.0f) {
+			successBehavior.accelerateurSuccess ();
+			soundController.play (6);
+			soundController.pitchUp (6, 0.5f);
+		}
+		exit = Time.time;
 	}
 }
