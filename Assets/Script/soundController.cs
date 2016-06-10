@@ -32,14 +32,6 @@ public class soundController : MonoBehaviour {
 	}
 
 	void Update(){
-		if (_audioSrc [0].isPlaying && _audioSrc [0].loop && _audioSrc [0].time > 10.0f){
-			if (loop0 == 1) {
-				delerp = true;
-			}
-			else if (loop0 < 1)
-				loop0++;
-			_audioSrc [0].time = 1.0f;
-		}
 		if ((_audioSrc [4].isPlaying || _audioSrc [5].isPlaying) && (_audioSrc [4].time > 5.0f || _audioSrc [5].time > 3.0f)){
 				lerp = true;
 		}
@@ -55,16 +47,8 @@ public class soundController : MonoBehaviour {
 			if (_audioSrc [0].volume < 0.51f)
 				delerp = false;
 		}
-		Debug.Log (tom);
 		//Jouer le rythme batterie
-		if (tempoCollision[0]!= 0.0f && Mathf.Round(tempoCollision[next]%4.0f) == Mathf.Round(Time.time%4.0f)) {
-			if (next != 0)//ne joue jamais le premier tom
-				play (3);
-			if (next < tom)
-				next++;
-			else
-				next = 0;
-		}
+
 	}
 	
 	static public void play(int nbpiste){
@@ -142,6 +126,11 @@ public class soundController : MonoBehaviour {
 			currentMark = 0;
 		_audioSrc [0].pitch = partitionAtome [currentMark];
 
+	}
+
+	static public void resetMark(){
+		currentMark = 0;
+		_audioSrc [0].pitch = partitionAtome [currentMark];
 	}
 		
 }

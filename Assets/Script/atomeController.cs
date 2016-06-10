@@ -119,6 +119,8 @@ public class atomeController : MonoBehaviour {
 
 	void OnMouseDown (){
 		if (touchable) {
+			if (!refill)
+				soundController.resetMark ();
 			_elctrl.Unleash ();
 			_electron.transform.parent = null;
 			_electron = null;
