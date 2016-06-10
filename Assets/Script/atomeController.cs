@@ -67,7 +67,7 @@ public class atomeController : MonoBehaviour {
 					if (!explosion) {
 						soundController.reset (0);
 					}
-					soundController.pitchUp (0, 0.3f);
+					soundController.nextMark ();
 					if (_elctrl._couche == _coucheMax) {
 						touchable = true;
 						Activate ();
