@@ -16,6 +16,8 @@ public class atomeController : MonoBehaviour {
 	Renderer _rnder = null;
 	float delay = 0.0f;
 	public bool clockwise = true;
+	private bool mousedown = false;
+	public bool currentPos = false;
 	// Use this for initialization
 
 	void Awake () {
@@ -49,6 +51,8 @@ public class atomeController : MonoBehaviour {
 		if (refill && _electron == null && delay + 3.0f <= Time.time) {
 			CreateElectron ();
 		}
+		if (mousedown && Time.timeScale > 0.5f)
+			Time.timeScale -= 0.01f;
 	}
 
 	void OnTriggerEnter (Collider c){
@@ -114,18 +118,42 @@ public class atomeController : MonoBehaviour {
 			_rnder.material = _rnder.materials [1];
 			_elctrl.ActivateColor();
 		}
+		changeCam ();
 
 	}
 
-	void OnMouseDown (){
+	public void changeCam(){
+		Camera.main.GetComponent<CameraManager> ().setTarget (this.gameObject);
+		//Question: faut il refill l'atome lorsqu'il s'active
+
+		//CurrentPos Change
+		GameObject[] atomeList = GameObject.FindGameObjectsWithTag ("atome");
+		foreach (GameObject o in atomeList) {
+			if (o.GetComponent<atomeController> ().currentPos) {
+				o.GetComponent<atomeController> ().currentPos = false;
+			}
+		}
+		currentPos = true;
+		//Fin CurrentPos Change
+	}
+
+	void OnMouseUp (){
 		if (touchable) {
 			if (!refill)
 				soundController.resetMark ();
-			_elctrl.Unleash ();
-			_electron.transform.parent = null;
-			_electron = null;
-			_elctrl = null;
+			if (_elctrl != null) {
+				_elctrl.Unleash ();
+				_electron.transform.parent = null;
+				_electron = null;
+				_elctrl = null;
+			}
 			delay = Time.time;
+			Time.timeScale = 1.0f;
+			mousedown = false;
 		}
+	}
+
+	void OnMouseDown (){
+		mousedown = true;
 	}
 }

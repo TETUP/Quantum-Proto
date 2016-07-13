@@ -30,7 +30,7 @@ public class successBehavior : MonoBehaviour {
 			Debug.Log ("Dualité Onde-Particule");
 			success [1] = true;
 		}
-		soundController.play (1);
+		//soundController.play (1);
 	}
 
 	//rencontre d'une particule avec un noyau à une grande vitesse

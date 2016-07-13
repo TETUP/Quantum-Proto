@@ -11,6 +11,7 @@ public class electronControler : MonoBehaviour {
 	public bool leashed = true;
 	private Light _lgt = null;
 	public float delay = 0.0f;
+	private float lifeTime = 0.0f;
 	private Collider _c = null;
 	private bool clockwise = true;
 	public TrailRenderer _tRender = null;
@@ -58,12 +59,14 @@ public class electronControler : MonoBehaviour {
 
 	public void Unleash (){
 		leashed = false;
+		Camera.main.GetComponent<CameraManager> ().setTarget (this.gameObject);
 		//soundController.play (2);
 		if (clockwise)
 			_rb.AddRelativeForce (position*rotateSpeed, 0.0f, 0.0f);
 		else
 			_rb.AddRelativeForce (-position*rotateSpeed, 0.0f, 0.0f);
 		delay = Time.time;
+		lifeTime = Time.time;
 		if (isAllUnleash ()) {
 			soundController.unloop (0);
 		}
@@ -104,7 +107,8 @@ public class electronControler : MonoBehaviour {
 	}
 
 	public void temporise(){
-		delay = Time.time;
+		if (lifeTime + 10.0 > Time.time)
+			delay = Time.time;
 	}
 
 	public bool isAllUnleash(){
