@@ -17,7 +17,6 @@ public class atomeController : MonoBehaviour {
 	float delay = 0.0f;
 	public bool clockwise = true;
 	private bool mousedown = false;
-	public bool currentPos = false;
 	// Use this for initialization
 
 	void Awake () {
@@ -75,6 +74,7 @@ public class atomeController : MonoBehaviour {
 					if (_elctrl._couche == _coucheMax) {
 						touchable = true;
 						Activate ();
+						Camera.main.GetComponent<CameraManager> ().changeCamera ();
 					}
 				}
 			}
@@ -118,24 +118,9 @@ public class atomeController : MonoBehaviour {
 			_rnder.material = _rnder.materials [1];
 			_elctrl.ActivateColor();
 		}
-		changeCam ();
 
 	}
 
-	public void changeCam(){
-		Camera.main.GetComponent<CameraManager> ().setTarget (this.gameObject);
-		//Question: faut il refill l'atome lorsqu'il s'active
-
-		//CurrentPos Change
-		GameObject[] atomeList = GameObject.FindGameObjectsWithTag ("atome");
-		foreach (GameObject o in atomeList) {
-			if (o.GetComponent<atomeController> ().currentPos) {
-				o.GetComponent<atomeController> ().currentPos = false;
-			}
-		}
-		currentPos = true;
-		//Fin CurrentPos Change
-	}
 
 	void OnMouseUp (){
 		if (touchable) {
