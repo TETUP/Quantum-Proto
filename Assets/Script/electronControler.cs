@@ -59,7 +59,7 @@ public class electronControler : MonoBehaviour {
 
 	public void Unleash (){
 		leashed = false;
-		Camera.main.GetComponent<CameraManager> ().setTarget (this.gameObject);
+		Camera.main.GetComponent<CameraManager> ().targetElectron (this.gameObject);
 		//soundController.play (2);
 		if (clockwise)
 			_rb.AddRelativeForce (position*rotateSpeed, 0.0f, 0.0f);
@@ -98,6 +98,7 @@ public class electronControler : MonoBehaviour {
 	}
 
 	void OnDestroy(){
+		Camera.main.GetComponent<CameraManager> ().untargetElectron ();
 		Instantiate (Resources.Load("ParticleEnd"), transform.position, transform.rotation);
 		soundController.mute (6);
 	}

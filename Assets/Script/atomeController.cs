@@ -73,6 +73,7 @@ public class atomeController : MonoBehaviour {
 					soundController.nextMark ();
 					if (_elctrl._couche == _coucheMax) {
 						touchable = true;
+						refill = true;
 						Activate ();
 						Camera.main.GetComponent<CameraManager> ().changeCamera ();
 					}

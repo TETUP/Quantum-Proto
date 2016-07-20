@@ -4,6 +4,7 @@ using System.Collections;
 public class CameraManager : MonoBehaviour {
 
 	private Transform[] targets;
+	private Transform eTarget = null;
 	private Vector3 targetPosition = Vector3.zero;
 	private float wait = 0.0f;
 	private bool isWaiting = false;
@@ -18,9 +19,13 @@ public class CameraManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (targets != null && targetPosition != Vector3.zero) {
-			transform.position = Vector3.Lerp (transform.position, targetPosition, Time.deltaTime*2);
+			if (eTarget == null)
+				transform.position = Vector3.Lerp (transform.position, targetPosition, Time.deltaTime * 2);
+			else
+				transform.position = Vector3.Lerp (transform.position, eTarget.position, Time.deltaTime * 8);
 			transform.position = new Vector3 (transform.position.x, transform.position.y, -10.0f);
 			Camera.main.orthographicSize = Mathf.Lerp (Camera.main.orthographicSize,_sizeCam, Time.deltaTime*2);
+				
 		} else {
 			if (!isWaiting) {
 				wait = Time.time;
@@ -54,7 +59,11 @@ public class CameraManager : MonoBehaviour {
 		}
 	}
 
-	public void setTarget(GameObject t){
-		//targets[0] = t.transform;
+	public void targetElectron(GameObject t){
+		eTarget = t.transform;
+	}
+
+	public void untargetElectron(){
+		eTarget = null;
 	}
 }
